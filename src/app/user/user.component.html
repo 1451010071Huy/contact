@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
+        aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row ">
+                <div class="col ">
+                    <h2>Contacts</h2>
+                </div>
+            </div>
+            <input [(ngModel)]="searchText" class="form-control mr-sm-5" placeholder="Search" type="text">
+            <div class="text-center">
+                <pagination-controls (pageChange)="p = $event; pageChanged($event)"></pagination-controls>
+            </div>
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th class="text-right">
+                            <button type="submit" class="btn btn-success btn-sm" (click)="hideAdd()">Create Contact</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contact of contacts | filter : searchText | paginate: {itemsPerPage: itemsPage, currentPage: p},let i = index">
+                        <td (click)="editContact(i)">{{contact.name}}</td>
+                        <td (click)="editContact(i)">{{contact.email}}</td>
+                        <td (click)="editContact(i)">{{contact.phone}}</td>
+                        <td class="text-right">
+                            <a (click)="editContact(i)" class="btn btn-success btn-sm">Edit</a>
+                            <a (click)="deleteEmployee(contact._id)" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-4">
+            <div [hidden]="!hideUpdate">
+                <div class="form-grizontal">
+                    <h2 class="control-label col-sm">Create Contact</h2>
+                    <form (submit)="addContact()">
+                        <div class="form-group">
+                            <div *ngFor="let input of contactElement">
+                                <label class="control-label col-sm-2">{{showLabel(input)}}</label>
+                                <div class="col-sm">
+                                    <input class="form-control" type="text" (change)="getValue($event, input)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div [hidden]="hideUpdate">
+                <h2 class="control-label col-sm">Update Contact</h2>
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-2">
+                        Name
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="contacts2.name" placeholder="Enter a new name">
+                    </div>
+                    <label for="email" class="control-label col-sm-2">
+                        Email
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="email" name="email" [(ngModel)]="contacts2.email" placeholder="Enter a new email">
+                    </div>
+                    <label for="phone" class="control-label col-sm-2">
+                        Phone
+                    </label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="contacts2.phone" placeholder="Enter a new phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm">
+                        <button type="submit" class="btn btn-primary" (click)="updateEmployee(contacts2._id)">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

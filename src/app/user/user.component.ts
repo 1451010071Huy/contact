@@ -1,27 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact';
 import { ContactService } from '../contact.service';
-import { ToastsManager, Toast } from 'ng2-toastr/ng2-toastr';
+import { ToastsManager, Toast, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { ViewContainerRef } from '@angular/core';
 import { FilterPipe } from '../filter.pipe';
-import { SortPipe } from '../sort.pipe'
 
-
-interface Person {
-  name: string;
-  email: string;
-}
-@Component({
+@Component({  
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 
 export class UserComponent implements OnInit {
-
+  ascending : boolean = true;
   contactInfo: Contact = { "_id": "", "name": "", "email": "", "phone": "" }
   contactElement: string[] = ["name", "email", "phone"]
-
+  order: string = 'name';
   index: number = 0;
   cuurentPage: number = 1;
   contacts: Contact[];
@@ -33,10 +27,21 @@ export class UserComponent implements OnInit {
   phone: string = "";
   hideUpdate: boolean = true;
   itemsPage: number = 5;
-  constructor(private contactService: ContactService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  searchText: string = "";
+  p;
+  constructor(private contactService: ContactService, public toastr: ToastsManager, vcr: ViewContainerRef,
+              private toatOpts : ToastOptions) {
     this.toastr.setRootViewContainerRef(vcr);
+    this.toatOpts.positionClass = "toast-bottom-right";
+    this.toatOpts.toastLife = 3000;
+    this.toatOpts.showCloseButton = true;
+    this.toatOpts.animate = "flyRight";
+    this.toatOpts.maxShown = 4;
+    this.toatOpts.dismiss = "auto"
   }
-
+  clickChangeAscending(){
+    this.ascending = !this.ascending;
+  }
   getContact() {
     this.contactService.getContacts()
       .subscribe(contacts =>
@@ -48,17 +53,9 @@ export class UserComponent implements OnInit {
 
   showSuccess(msg: string) {
     this.toastr.success(msg, 'Thành Công!');
-    this.toastr.onClickToast()
-      .subscribe(toast => {
-        if (toast.timeoutId) {
-          clearTimeout(toast.timeoutId);
-        }
-        this.toastr.dismissToast(toast);
-      });
   }
 
   //add contact
-
   addContact() {
     this.contactService.addContact(this.contactInfo)
       .subscribe(contact => {
@@ -66,7 +63,7 @@ export class UserComponent implements OnInit {
         this.contacts = [];
         this.showSuccess('Thêm 1 danh bạ');
         this.getContact();
-      });
+      },err => console.log(err));
 
   }
   deleteEmployee(id: any): void {

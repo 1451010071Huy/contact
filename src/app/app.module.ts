@@ -6,18 +6,17 @@ import { FormsModule } from '@angular/forms';
 
 import { ContactService } from './contact.service';
 import { HttpModule } from '@angular/http';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastModule } from 'ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterPipe } from './filter.pipe';
-import { SortPipe } from "./sort.pipe";
+import { Ng2OrderModule } from 'ng2-order-pipe'
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     FilterPipe,
-    SortPipe, 
   ],
   imports: [
     BrowserModule,
@@ -26,6 +25,7 @@ import { SortPipe } from "./sort.pipe";
     ToastModule.forRoot(),
     BrowserAnimationsModule,
     NgxPaginationModule,
+    Ng2OrderModule
   ],
   providers: [ContactService],
   bootstrap: [AppComponent],

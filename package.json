@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -31,6 +31,7 @@
     "jquery": "^3.2.1",
     "mongodb": "^2.2.33",
     "mongoose": "^4.12.5",
+    "ng2-order-pipe": "^0.1.5",
     "ng2-toastr": "^4.1.2",
     "ngx-pagination": "^3.0.3",
     "nodemon": "^1.12.1",

@@ -10,7 +10,7 @@ const port = 3000;
 const route = require("./routes/route");
 
 //connect to mongodb
-mongoose.connect('mongodb://localhost:27017/contactlist', {useMongoClient: true});
+mongoose.connect('mongodb://huynguyenayp:Anhyeuem1@ds113925.mlab.com:13925/nodetodotest', {useMongoClient: true});
 
 //on connection
 mongoose.connection.on("connected",()=>{

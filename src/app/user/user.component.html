@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Contact</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
         aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,10 @@
             <table class="table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th (click)="clickChangeAscending()">Name 
+                            <i *ngIf="ascending" class="fa fa-sort-desc" aria-hidden="true"></i>
+                            <i *ngIf="!ascending" class="fa fa-sort-asc" aria-hidden="true"></i>
+                        </th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th class="text-right">
@@ -48,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let contact of contacts | filter : searchText | paginate: {itemsPerPage: itemsPage, currentPage: p},let i = index">
+                    <tr *ngFor="let contact of contacts | orderBy: order: ascending | filter : searchText | paginate: {itemsPerPage: itemsPage, currentPage: p},let i = index">
                         <td (click)="editContact(i)">{{contact.name}}</td>
                         <td (click)="editContact(i)">{{contact.email}}</td>
                         <td (click)="editContact(i)">{{contact.phone}}</td>
